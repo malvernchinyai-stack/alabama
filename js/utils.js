@@ -51,6 +51,21 @@ export function nextDocNumber(prefix, counter) {
   return `${prefix}${String(counter).padStart(4, '0')}`;
 }
 
+// Strips characters that are unsafe in a filename on Windows/macOS/Android and tidies whitespace.
+export function safeFilenamePart(str) {
+  return String(str ?? '')
+    .replace(/[\\/:*?"<>|]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Default PDF download/share filename: "<Client Name> - <Doc Number>.pdf"
+export function pdfFilename(name, docNumber) {
+  const namePart = safeFilenamePart(name) || 'Client';
+  const numberPart = safeFilenamePart(docNumber) || 'Document';
+  return `${namePart} - ${numberPart}.pdf`;
+}
+
 export function toast(msg, type = 'info') {
   const el = document.getElementById('toast-root');
   if (!el) return;

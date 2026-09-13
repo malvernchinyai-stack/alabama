@@ -22,10 +22,10 @@ export async function refreshSettings() {
 }
 
 function applyTheme(settings) {
-  document.documentElement.style.setProperty('--color-primary', settings.primaryColor || '#0A2463');
+  document.documentElement.style.setProperty('--color-primary', settings.primaryColor || '#002760');
   document.documentElement.style.setProperty('--color-accent', settings.accentColor || '#F2A93B');
   // derive a lighter shade for gradients
-  document.documentElement.style.setProperty('--color-primary-light', lighten(settings.primaryColor || '#0A2463', 28));
+  document.documentElement.style.setProperty('--color-primary-light', lighten(settings.primaryColor || '#002760', 28));
 }
 
 function lighten(hex, amt) {

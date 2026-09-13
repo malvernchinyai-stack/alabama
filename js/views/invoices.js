@@ -2,7 +2,7 @@ import { DB } from '../db.js';
 import { getSettings } from '../app.js';
 import {
   uid, money, fmtDate, todayISO, addDays, escapeHtml, nextDocNumber, statusBadge, toast,
-  shareOrDownload, convert, paymentStatus, isOverdue,
+  shareOrDownload, convert, paymentStatus, isOverdue, pdfFilename,
 } from '../utils.js';
 import { openModal, closeModal, confirmDialog } from '../ui.js';
 import { createItemsEditor } from '../item-editor.js';
@@ -289,11 +289,11 @@ async function renderView(root, { id }) {
   document.getElementById('edit-btn').addEventListener('click', () => { location.hash = `#/invoices/${id}/edit`; });
   document.getElementById('pdf-btn').addEventListener('click', () => {
     const doc = buildInvoicePDF(invoice, settings);
-    doc.save(`${invoice.invoiceNumber}.pdf`);
+    doc.save(pdfFilename(invoice.client?.name, invoice.invoiceNumber));
   });
   document.getElementById('share-btn').addEventListener('click', async () => {
     const doc = buildInvoicePDF(invoice, settings);
-    await shareOrDownload(doc.output('blob'), `${invoice.invoiceNumber}.pdf`);
+    await shareOrDownload(doc.output('blob'), pdfFilename(invoice.client?.name, invoice.invoiceNumber));
   });
   const recordBtn = document.getElementById('record-payment-btn');
   if (recordBtn) recordBtn.addEventListener('click', () => {
@@ -303,7 +303,7 @@ async function renderView(root, { id }) {
     btn.addEventListener('click', () => {
       const idx = Number(btn.dataset.receiptIdx);
       const doc = buildPaymentReceiptPDF(invoice, payments[idx], idx, settings);
-      doc.save(`${invoice.invoiceNumber}-receipt-${idx + 1}.pdf`);
+      doc.save(pdfFilename(invoice.client?.name, `${invoice.invoiceNumber}-R${idx + 1}`));
     });
   });
   document.getElementById('delete-btn').addEventListener('click', async () => {

@@ -16,7 +16,7 @@ function hexToRgb(hex) {
 
 function drawHeader(doc, settings, docTitle, meta) {
   const pageWidth = doc.internal.pageSize.getWidth();
-  const [pr, pg, pb] = hexToRgb(settings.primaryColor || '#0A2463');
+  const [pr, pg, pb] = hexToRgb(settings.primaryColor || '#002760');
   const [ar, ag, ab] = hexToRgb(settings.accentColor || '#F2A93B');
 
   // top accent bar
@@ -181,7 +181,7 @@ function drawTotals(doc, startY, totals, settings) {
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
-  const [pr, pg, pb] = hexToRgb(settings.primaryColor || '#0A2463');
+  const [pr, pg, pb] = hexToRgb(settings.primaryColor || '#002760');
   doc.setTextColor(pr, pg, pb);
   doc.text('TOTAL', labelX, y + 1, { align: 'right' });
   doc.text(money(totals.total, settings.currency), valueX, y + 1, { align: 'right' });
@@ -330,7 +330,7 @@ export function buildInvoicePDF(invoice, settings) {
   doc.text(money(received, settings.currency), valueX, y, { align: 'right' });
   y += 5.5;
   doc.setFont('helvetica', 'bold');
-  const [pr, pg, pb] = hexToRgb(settings.primaryColor || '#0A2463');
+  const [pr, pg, pb] = hexToRgb(settings.primaryColor || '#002760');
   doc.setTextColor(pr, pg, pb);
   doc.text('BALANCE DUE', labelX, y, { align: 'right' });
   doc.text(money(balance, settings.currency), valueX, y, { align: 'right' });
@@ -374,7 +374,7 @@ export function buildPaymentReceiptPDF(invoice, payment, paymentIndex, settings)
   y += 4;
 
   doc.setFont('helvetica', 'bold'); doc.setFontSize(12);
-  const [pr, pg, pb] = hexToRgb(settings.primaryColor || '#0A2463');
+  const [pr, pg, pb] = hexToRgb(settings.primaryColor || '#002760');
   doc.setTextColor(pr, pg, pb);
   doc.text(`Amount Received: ${money(payment.amount, settings.currency)}`, 12, y + 2);
   y += 10;

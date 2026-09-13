@@ -117,7 +117,7 @@ export const DEFAULT_SETTINGS = {
   nextBoqNumber: 1,
   quoteValidityDays: 30,
   invoiceDueDays: 14,
-  primaryColor: '#0A2463',
+  primaryColor: '#002760',
   accentColor: '#F2A93B',
   quoteTerms:
     '1. This quotation is valid for the period stated above.\n2. A 50% deposit is required to confirm the order, balance on completion.\n3. Lead time begins after deposit and site survey confirmation.\n4. Prices are subject to change without notice after expiry of this quote.\n5. Warranty terms apply per manufacturer / supplier specification.',

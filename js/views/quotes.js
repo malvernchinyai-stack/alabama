@@ -1,7 +1,7 @@
 import { DB } from '../db.js';
 import { getSettings } from '../app.js';
 import {
-  uid, money, fmtDate, todayISO, addDays, escapeHtml, nextDocNumber, statusBadge, toast, shareOrDownload, convert,
+  uid, money, fmtDate, todayISO, addDays, escapeHtml, nextDocNumber, statusBadge, toast, shareOrDownload, convert, pdfFilename,
 } from '../utils.js';
 import { confirmDialog } from '../ui.js';
 import { createItemsEditor } from '../item-editor.js';
@@ -220,12 +220,12 @@ async function renderView(root, { id }) {
   document.getElementById('edit-btn').addEventListener('click', () => { location.hash = `#/quotes/${id}/edit`; });
   document.getElementById('pdf-btn').addEventListener('click', async () => {
     const doc = buildQuotePDF(quote, settings);
-    doc.save(`${quote.quoteNumber}.pdf`);
+    doc.save(pdfFilename(quote.client?.name, quote.quoteNumber));
   });
   document.getElementById('share-btn').addEventListener('click', async () => {
     const doc = buildQuotePDF(quote, settings);
     const blob = doc.output('blob');
-    await shareOrDownload(blob, `${quote.quoteNumber}.pdf`);
+    await shareOrDownload(blob, pdfFilename(quote.client?.name, quote.quoteNumber));
   });
   document.getElementById('delete-btn').addEventListener('click', async () => {
     const ok = await confirmDialog(`Delete quote ${quote.quoteNumber}? This cannot be undone.`);

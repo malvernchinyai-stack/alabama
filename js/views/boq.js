@@ -1,7 +1,7 @@
 import { DB } from '../db.js';
 import { getSettings } from '../app.js';
 import {
-  uid, money, fmtDate, todayISO, escapeHtml, nextDocNumber, statusBadge, toast, shareOrDownload,
+  uid, money, fmtDate, todayISO, escapeHtml, nextDocNumber, statusBadge, toast, shareOrDownload, pdfFilename,
 } from '../utils.js';
 import { openModal, closeModal, confirmDialog } from '../ui.js';
 import { createItemsEditor } from '../item-editor.js';
@@ -169,11 +169,11 @@ async function renderView(root, { id }) {
   document.getElementById('edit-btn').addEventListener('click', () => { location.hash = `#/boq/${id}/edit`; });
   document.getElementById('pdf-btn').addEventListener('click', () => {
     const doc = buildBoqPDF(boq, settings);
-    doc.save(`${boq.boqNumber}.pdf`);
+    doc.save(pdfFilename(boq.client?.name || boq.title, boq.boqNumber));
   });
   document.getElementById('share-btn').addEventListener('click', async () => {
     const doc = buildBoqPDF(boq, settings);
-    await shareOrDownload(doc.output('blob'), `${boq.boqNumber}.pdf`);
+    await shareOrDownload(doc.output('blob'), pdfFilename(boq.client?.name || boq.title, boq.boqNumber));
   });
   const convertBtn = document.getElementById('convert-btn');
   if (convertBtn) convertBtn.addEventListener('click', () => { location.hash = `#/quotes/new?fromBoq=${boq.id}`; });
